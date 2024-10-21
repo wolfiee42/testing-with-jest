@@ -14,3 +14,8 @@ test("object assignment", () => {
 
   expect(data).toEqual({ one: 1, two: 2 }); //toEqual is used for non-premitive data.
 });
+
+test("null is falsy", () => {
+  const n = null;
+  expect(n).toBeFalsy(); //toFalsy is used for falsy value.
+});
