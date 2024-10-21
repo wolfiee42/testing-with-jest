@@ -17,5 +17,10 @@ test("object assignment", () => {
 
 test("null is falsy", () => {
   const n = null;
-  expect(n).toBeFalsy(); //toFalsy is used for falsy value.
+  expect(n).toBeFalsy(); //toBeFalsy is used for falsy value. ex. null, 0, false
+});
+
+test("One is truthy", () => {
+  const n = 1;
+  expect(n).toBeTruthy(); //toBeTruthy is used for truthy value;
 });
