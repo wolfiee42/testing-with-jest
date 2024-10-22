@@ -29,5 +29,5 @@ test("One is truthy", () => {
 test("throws on invalid input.", () => {
   expect(() => {
     myFunction("dfghnb");
-  }).toThrow();
+  }).toThrow(); //toThrow is used for error handleing.
 });
