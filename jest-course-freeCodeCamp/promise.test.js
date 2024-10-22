@@ -1,4 +1,4 @@
-const fetchPromise = require("./asyncPromise");
+const fetchPromise = require("./promise");
 
 // to check the promise is resolved.
 test("the data is peanit butter.", () => {
