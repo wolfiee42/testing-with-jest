@@ -21,6 +21,11 @@ test("null is falsy", () => {
   expect(n).toBeFalsy(); //toBeFalsy is used for falsy value. ex. null, 0, false
 });
 
+test("null is not truthy.", () => {
+  const n = null;
+  expect(n).not.toBeTruthy();
+});
+
 test("One is truthy", () => {
   const n = 1;
   expect(n).toBeTruthy(); //toBeTruthy is used for truthy value;
