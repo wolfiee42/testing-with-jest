@@ -47,3 +47,16 @@ describe("drinkAll", () => {
     expect(drink).not.toHaveBeenCalled();
   });
 });
+
+const ashik = 21;
+const nahin = 23;
+
+describe(`ashik and nahin are`, () => {
+  test("are not same aged", () => {
+    expect(nahin - ashik).not.toEqual(0);
+  });
+
+  test("are has age gap.", () => {
+    expect(nahin - ashik).toEqual(2);
+  });
+});
