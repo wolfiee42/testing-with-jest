@@ -36,7 +36,16 @@ describe("User Registration", () => {
     });
 
     describe("given the username and password are not valid.", () => {
-        it('should return a 400 error', () => {
+        it('should return a 400 error', async () => {
+            const createUserServiceMock = jest
+                .spyOn(UserService, 'createUser')
+                // @ts-ignore
+                .mockReturnValueOnce(userPayload);
+
+            const { statusCode } = await supertest(app).post('/api/users').send({ ...userInput, passwordConfirmation: 'doesnotmatchwiththepassword' })
+
+            expect(statusCode).toBe(400);
+            expect(createUserServiceMock).not.toHaveBeenCalledWith();
 
         });
     });
