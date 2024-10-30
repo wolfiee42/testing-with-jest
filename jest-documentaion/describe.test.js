@@ -3,6 +3,8 @@ const myBeverage = {
   sour: false,
 };
 
+// describe.only("My beverage is ", () => { // to run only one specific test at that time.
+// describe.skip("My beverage is ", () => { // to skip a specific testcase.
 describe("My beverage is ", () => {
   test("delicious", () => {
     expect(myBeverage.delicious).toBeTruthy(); //.toBeTruthy()
