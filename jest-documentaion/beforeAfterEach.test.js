@@ -1,10 +1,12 @@
 describe("Array Method", () => {
   let testArray;
 
+  // gets called before runing every single function
   beforeEach(() => {
     testArray = [1, 2, 3, 4];
   });
 
+  // gets called after running every single function
   afterEach(() => {
     testArray = [];
   });
