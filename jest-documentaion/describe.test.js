@@ -14,7 +14,7 @@ describe("My beverage is ", () => {
   });
 });
 
-//nested describe blocks, hierarchy of tests.
+// nested describe blocks, hierarchy of tests.
 
 class CustomError {
   constructor() {
