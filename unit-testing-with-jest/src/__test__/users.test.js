@@ -2,8 +2,14 @@ const { validationResult } = require("express-validator");
 const { getUserByIdHandler } = require("../handlers/user.mjs");
 const { mockUsers } = require("../utils/constants.mjs");
 
+// here is a visual of mocking a third party funtions or methods.
+
+// 1. package name with a callback func relate to react, to avoid an extra return
 jest.mock("express-validator", () => ({
+  // 2. the actual method or func you want to mock.
   validationResult: jest.fn(() => ({
+    //  3. according to the response declaring
+    // the methods under the function or method, which is comming from the package
     isEmpty: jest.fn(() => false),
     array: jest.fn(() => []),
   })),
