@@ -9,6 +9,7 @@ import { mockUsers } from "../utils/constants.mjs";
 import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
 import { resolveIndexByUserId } from "../utils/middlewares.mjs";
 import { getUserByIdHandler } from "../handlers/users.mjs";
+import { createUserHandler } from "../handlers/user.mjs";
 
 const router = Router();
 

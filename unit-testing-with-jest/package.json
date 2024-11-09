@@ -10,6 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express-validator": "^7.2.0",
+    "mongoose": "^8.8.1",
     "ts-node": "^10.9.2"
   }
 }
