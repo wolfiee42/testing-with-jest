@@ -1,5 +1,13 @@
+const { validationResult } = require("express-validator");
 const { getUserByIdHandler } = require("../handlers/user.mjs");
 const { mockUsers } = require("../utils/constants.mjs");
+
+jest.mock("express-validator", () => ({
+  validationResult: jest.fn(() => ({
+    isEmpty: jest.fn(() => false),
+    array: jest.fn(() => []),
+  })),
+}));
 
 const mockRequest = {
   findUserIndex: 1,
@@ -8,6 +16,7 @@ const mockRequest = {
 const mockResponse = {
   sendStatus: jest.fn(),
   send: jest.fn(),
+  status: jest.fn(() => mockResponse),
 };
 
 describe("get users", () => {
@@ -26,4 +35,8 @@ describe("get users", () => {
     expect(mockResponse.sendStatus).toHaveBeenCalledTimes(1);
     expect(mockResponse.send).not.toHaveBeenCalled();
   });
+});
+
+describe("create users", () => {
+  it("should return 400 when result is empty.", () => {});
 });

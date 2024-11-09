@@ -11,14 +11,13 @@ export const getUserByIdHandler = (request, response) => {
 };
 
 export const createUserHandler = async (request, response) => {
+  // 1
   const result = validationResult(request);
   if (!result.isEmpty()) return response.status(400).send(result.array());
-
+  // 2
   const data = matchedData(request);
-  console.log(data);
   data.password = hashPassword(data.password);
-  console.log(data);
-
+  // 3
   const newUser = new User(data);
   try {
     const savedUser = await newUser.save();
