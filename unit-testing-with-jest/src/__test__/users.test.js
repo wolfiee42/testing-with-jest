@@ -98,4 +98,19 @@ describe("create users", () => {
       password: "password",
     });
   });
+
+  it("should return 400 when database is failed to save the user.", async () => {
+    jest.spyOn(validator, "validationResult").mockImplementationOnce(() => ({
+      isEmpty: jest.fn(() => true),
+    }));
+    const saveMethod = jest
+      .spyOn(User.prototype, "save")
+      .mockImplementationOnce(() =>
+        Promise.reject("Failed to store data in Database")
+      );
+
+    await createUserHandler(mockRequest, mockResponse);
+    expect(saveMethod).toHaveBeenCalled();
+    expect(mockResponse.sendStatus).toHaveBeenCalledWith(400);
+  });
 });
