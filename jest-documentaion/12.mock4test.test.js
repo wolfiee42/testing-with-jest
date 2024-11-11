@@ -34,6 +34,7 @@ describe("User Service Test", () => {
     }
   });
 
+  // mockRejectedValueOnce
   it("should return error in the first try and return data int he second call.", async () => {
     UserService.fetchUserData.mockRejectedValueOnce(new Error("Network Fail."));
     UserService.fetchUserData.mockResolvedValueOnce({ id: 1, name: "saif" });
