@@ -48,5 +48,22 @@ describe("fetching user's profile multiple times.", () => {
     });
     const secondAttempt = await AuthService.getUserProfile();
     expect(secondAttempt).toEqual({ id: 1, name: "John Doe" });
+    expect(AuthService.getUserProfile).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("should log out in the first attempt and error in the second.", () => {
+  it("should logged out in the first attempt and returns error if tries for the second time.", async () => {
+    AuthService.logout.mockReturnValueOnce([{ msg: "Logout successful" }]);
+    const firstAttempt = await AuthService.logout();
+    expect(firstAttempt).toEqual([{ msg: "Logout successful" }]);
+
+    AuthService.logout.mockRejectedValueOnce(new Error("Log out failed."));
+    try {
+      await AuthService.logout();
+    } catch (error) {
+      expect(error).toEqual(new Error("Log out failed."));
+    }
+    expect(AuthService.logout).toHaveBeenCalledTimes(2);
   });
 });
