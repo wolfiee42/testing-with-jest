@@ -26,4 +26,27 @@ describe("User's Login process", () => {
   });
 });
 
-describe("fetching user's profile multiple times.", () => {});
+describe("fetching user's profile multiple times.", () => {
+  it("should return users full biodata with password in the first attempt and only name in the second.", async () => {
+    AuthService.getUserProfile.mockResolvedValueOnce({
+      id: 1,
+      name: "John Doe",
+      password: "1233214",
+      email: "johndoe@example.com",
+    });
+    const firstAttempt = await AuthService.getUserProfile();
+    expect(firstAttempt).toEqual({
+      id: 1,
+      name: "John Doe",
+      password: "1233214",
+      email: "johndoe@example.com",
+    });
+
+    AuthService.getUserProfile.mockResolvedValueOnce({
+      id: 1,
+      name: "John Doe",
+    });
+    const secondAttempt = await AuthService.getUserProfile();
+    expect(secondAttempt).toEqual({ id: 1, name: "John Doe" });
+  });
+});
