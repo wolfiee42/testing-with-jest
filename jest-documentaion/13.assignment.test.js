@@ -52,7 +52,7 @@ describe("fetching user's profile multiple times.", () => {
   });
 });
 
-describe("should log out in the first attempt and error in the second.", () => {
+describe("User's Logout proccess.", () => {
   it("should logged out in the first attempt and returns error if tries for the second time.", async () => {
     AuthService.logout.mockReturnValueOnce([{ msg: "Logout successful" }]);
     const firstAttempt = await AuthService.logout();
@@ -65,5 +65,49 @@ describe("should log out in the first attempt and error in the second.", () => {
       expect(error).toEqual(new Error("Log out failed."));
     }
     expect(AuthService.logout).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("Login User and Fetch User's Information.", () => {
+  it("should login with user credindials and fetch users information.", async () => {
+    AuthService.login.mockResolvedValueOnce({ id: 2, name: "Ashik" });
+    const loginAttepmt = await AuthService.login();
+    expect(loginAttepmt).toEqual({ id: 2, name: "Ashik" });
+
+    AuthService.getUserProfile.mockResolvedValueOnce({
+      id: 2,
+      name: "Ashik",
+      email: "ashik@example.com",
+      password: "1234321",
+    });
+
+    const secondAttempt = await AuthService.getUserProfile();
+    expect(secondAttempt).toEqual({
+      id: 2,
+      name: "Ashik",
+      email: "ashik@example.com",
+      password: "1234321",
+    });
+  });
+
+  it("should not return user info as it is not able to login it n the first place.", async () => {
+    AuthService.login.mockRejectedValueOnce(new Error("Login Failed."));
+    try {
+      await AuthService.login();
+    } catch (error) {
+      expect(error).toEqual(new Error("Login Failed."));
+    }
+
+    AuthService.getUserProfile.mockRejectedValueOnce(
+      new Error("No User Detected.")
+    );
+    try {
+      await AuthService.getUserProfile();
+    } catch (error) {
+      expect(error).toEqual(new Error("No User Detected."));
+    }
+
+    expect(AuthService.login).toHaveBeenCalled();
+    expect(AuthService.getUserProfile).toHaveBeenCalled();
   });
 });
