@@ -12,11 +12,19 @@ const AuthService = {
 
 beforeAll(() => {
   console.log("Initializing the test.")
-})
+});
 
 afterAll(() => {
   console.log('Clearing up the test environment.');
-})
+});
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+afterEach(() => {
+  console.log('Test case completed.');
+});
 
 describe("Testing Auth Service", () => {
 
