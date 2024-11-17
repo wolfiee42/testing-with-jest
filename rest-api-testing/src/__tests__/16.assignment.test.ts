@@ -1,8 +1,3 @@
-import { MongoMemoryServer } from "mongodb-memory-server";
-import mongoose from 'mongoose';
-
-
-
 const AuthService = {
   login: jest.fn(),
   getUserProfile: jest.fn(),
@@ -28,15 +23,23 @@ afterEach(() => {
 
 describe("Testing Auth Service", () => {
 
-  it('should return successfully login', async () => {
+  it("should login successfully with valid credentials", async () => {
+    AuthService.login.mockResolvedValueOnce({ id: 1, name: "John Doe" });
 
-    const username = 'saif42';
-    const password = 'holaAmigos42'
-
-    AuthService.login.mockReturnValueOnce({ username: 'saiif42', password: 'holaAmigos42' });
-    await AuthService.login(username, password);
-    expect(AuthService.login).toHaveBeenCalled();
-
+    const response = await AuthService.login("john", "password123");
+    expect(response).toEqual({ id: 1, name: "John Doe" });
+    expect(AuthService.login).toHaveBeenCalledTimes(1);
+    expect(AuthService.login).toHaveBeenCalledWith("john", "password123");
   });
 
+  it('should not login because of invalid credentials.', async () => {
+    AuthService.login.mockRejectedValueOnce(new Error('Invalid Credentials.'))
+    try {
+      await AuthService.login('john', 'wrongPassword');
+    } catch (error) {
+      expect(error).toEqual(new Error("Invalid Credentials."));
+      expect(AuthService.login).toHaveBeenCalledTimes(1);
+      expect(AuthService.login).toHaveBeenCalledWith('john', 'wrongPassword');
+    }
+  });
 });
