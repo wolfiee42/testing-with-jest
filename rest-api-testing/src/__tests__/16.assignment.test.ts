@@ -5,6 +5,12 @@ const AuthService = {
   checkLoginAttempt: jest.fn()
 }
 
+const LoginAttempt = [
+  ['user1', 1, 'Allowed'],
+  ['user2', 3, 'Allowed'],
+  ['user4', 4, 'Too many attempts.'],
+]
+
 beforeAll(() => {
   console.log("Initializing the test.")
 });
@@ -93,4 +99,26 @@ describe('User Logout Test', () => {
       expect(error).toEqual(new Error("User is already logged out."))
     }
   });
-})
+});
+
+
+
+describe.each(LoginAttempt)(
+  "Login attempts for %s with %i attempts",
+  (username, attempt, expectedResult) => {
+    it(`should return ${expectedResult}`, async () => {
+      const attemptResult = Number(attempt) <= 3 ? "Allowed" : "Too many attempts."
+      AuthService.checkLoginAttempt.mockReturnValueOnce(attemptResult);
+
+      const response = await AuthService.checkLoginAttempt(username);
+
+      expect(response).toBe(expectedResult);
+
+      if (expectedResult === 'Too many attempts.') {
+        expect(response).not.toBeFalsy();
+      } else {
+        expect(response).toBeTruthy();
+      }
+    });
+  }
+)
