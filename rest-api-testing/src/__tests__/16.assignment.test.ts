@@ -77,3 +77,20 @@ describe('User Profile Test', () => {
 
   });
 })
+
+describe('User Logout Test', () => {
+  it('should return a successfull message regarding users login.', async () => {
+    AuthService.logout
+      .mockResolvedValueOnce({ msg: "Successfully Logged out" })
+      .mockRejectedValueOnce(new Error("User is already logged out."))
+    const firstAttempt = await AuthService.logout();
+    expect(firstAttempt).toEqual({ msg: "Successfully Logged out" });
+    expect(AuthService.logout).toHaveBeenCalled();
+    try {
+      await AuthService.logout();
+      expect(AuthService.logout).toHaveBeenCalledTimes(2);
+    } catch (error) {
+      expect(error).toEqual(new Error("User is already logged out."))
+    }
+  });
+})
