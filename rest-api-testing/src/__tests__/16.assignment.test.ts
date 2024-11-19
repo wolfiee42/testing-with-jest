@@ -121,4 +121,4 @@ describe.each(LoginAttempt)(
       }
     });
   }
-)
+);
