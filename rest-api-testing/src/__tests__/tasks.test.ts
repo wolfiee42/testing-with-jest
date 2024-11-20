@@ -66,6 +66,7 @@ describe('', () => {
     });
 
     it('should return 404 for non-existent task (PUT / DELETE)', async () => {
+
         const invalidId = new mongoose.Types.ObjectId();
 
         const putResponse = await request(TaskService).put(`/tasks/${invalidId}`).send({ title: 'not found' });
@@ -75,5 +76,6 @@ describe('', () => {
         const deleteResponse = await request(TaskService).delete(`/tasks/${invalidId}`);
         expect(deleteResponse.status).toBe(404);
         expect(deleteResponse.body).toEqual({ error: "Task not found" });
+
     });
 });
