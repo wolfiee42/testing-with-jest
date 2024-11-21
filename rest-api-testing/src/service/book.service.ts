@@ -60,5 +60,5 @@ app.delete('/books/:id', async (req: Request, res: Response) => {
     }
 });
 
-// Export the app
-module.exports = app;
+
+export const BookService = app;
